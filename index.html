@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Captcha! — 2026 서울과학기술대학교 시각디자인 졸업전시</title>
+<meta property="og:title" content="Captcha! — 2026 서울과학기술대학교 시각디자인 졸업전시">
+<meta property="og:description" content="제44회 서울과학기술대학교 시각디자인전공 졸업전시">
+<meta property="og:url" content="https://sie0nahn.github.io/web_2026/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Captcha! — 2026 서울과학기술대학교 시각디자인 졸업전시">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"></noscript>
+<link rel="stylesheet" href="style.css?v=14">
+</head>
+<body class="theme-light">
+
+<nav>
+  <span class="nav-logo" onclick="showPage('main')">Captcha!</span>
+  <ul class="nav-links">
+    <li><button onclick="showPage('main')" id="nav-main" class="active">Main</button></li>
+    <li><button onclick="showPage('designer')" id="nav-designer">Designer</button></li>
+    <li><button onclick="showPage('work')" id="nav-work">Work</button></li>
+    <li><button onclick="showPage('message')" id="nav-message">Message</button></li>
+  </ul>
+</nav>
+
+<!-- MAIN -->
+<div id="page-main" class="page active">
+
+  <!-- ── 풀스크린 3D 히어로 (컴퓨터 메인) ── -->
+  <section class="m-hero">
+    <canvas id="hero-canvas"></canvas>
+    <h1 class="m-title">Seoul Tech<br>Visual Communication Design<br>The 44th Graduation Exhibition</h1>
+    <div class="m-meta">
+      <div class="m-meta-item"><span class="gal">2026. 11. 17 –<br>2026. 11. 22</span></div>
+      <div class="m-meta-item"><span class="gal">10:00 –<br>20:00</span></div>
+      <div class="m-meta-item"><span class="gal">SeoulTech<br>Centennial Hall 1-3F</span></div>
+      <div class="m-meta-item"><span class="kr">서울과학기술대학교<br>백주년기념관 <span class="sg">1-3F</span></span></div>
+    </div>
+  </section>
+
+  <!-- ── 블루 섹션 (Frame 98) ── -->
+  <section class="m-blue">
+    <div class="m-video"><span>비디오 임의</span></div>
+    <div class="m-logo" role="img" aria-label="Captcha!"></div>
+  </section>
+
+  <!-- ── 화이트 정보 섹션 (Frame 104) ── -->
+  <section class="m-info">
+    <div class="mi-block">
+      <div class="mi-label">Professor</div>
+      <div class="mi-profs">
+        <div class="mi-track">
+          <div class="mi-track-name"><span class="kr u">경험디자인</span><span class="sg">Experiential Design</span></div>
+          <div class="mi-people">
+            <div><span class="kr">박승배</span><span class="sg">Park Seungbae</span></div>
+            <div><span class="kr">안미경</span><span class="sg">An Mikyung</span></div>
+            <div><span class="kr">이은실</span><span class="sg">Lee Eunsil</span></div>
+          </div>
+        </div>
+        <div class="mi-track">
+          <div class="mi-track-name"><span class="kr u">콘텐츠 디자인</span><span class="sg">Contents Design</span></div>
+          <div class="mi-people">
+            <div><span class="kr">노준구</span><span class="sg">Noh Jungu</span></div>
+            <div><span class="kr">박우혁</span><span class="sg">Park Woohyuk</span></div>
+            <div><span class="kr">오영재</span><span class="sg">Oh Youngjae</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mi-block">
+      <div class="mi-label">Committee</div>
+      <div class="mi-comm">
+        <div class="mi-team">
+          <div class="mi-row"><span class="kr u">위원장</span><span class="kr">박진아</span></div>
+          <div class="mi-row"><span class="kr u">부위원장</span><span class="kr">최민석</span></div>
+        </div>
+        <div class="mi-team"><span class="kr u">재정팀</span><div class="mi-names"><span class="kr">신서애</span><span class="kr">박진아</span><span class="kr">최민석</span></div></div>
+        <div class="mi-team"><span class="kr u">DP팀</span><div class="mi-names"><span class="kr">서유랑</span><span class="kr">우지윤</span><span class="kr">지민</span><span class="kr">최민석</span></div></div>
+        <div class="mi-team"><span class="kr u">편집팀</span><div class="mi-names"><span class="kr">이장현</span><span class="kr">박진아</span><span class="kr">홍민아</span></div></div>
+        <div class="mi-team"><span class="kr u">홍보팀</span><div class="mi-names"><span class="kr">장정아</span><span class="kr">신서애</span></div></div>
+        <div class="mi-team"><span class="kr u">웹팀</span><div class="mi-names"><span class="kr">안시언</span></div></div>
+      </div>
+    </div>
+
+    <div class="mi-block">
+      <div class="mi-sponsor-row">
+        <div class="mi-label">Sponsor</div>
+        <div class="mi-sponsors">
+          <span>SAA</span><span>산돌구름</span><span>오늘</span><span>RixFont</span><span>Yoondesign</span><span>MOORIM</span>
+        </div>
+      </div>
+      <p class="mi-copy">2026ⓒSeoul National University of Science and Technology. All Rights Reserved.</p>
+    </div>
+  </section>
+</div>
+
+<!-- DESIGNER -->
+<div id="page-designer" class="page">
+  <div class="page-header">
+    <h2 class="page-title">Designer</h2>
+    <span class="page-sub">78명</span>
+  </div>
+  <!-- 검색창 -->
+  <div class="designer-search">
+    <input
+      type="text"
+      id="designer-search-input"
+      placeholder="이름으로 검색 — Search by name"
+      oninput="searchDesigner(this.value)"
+    >
+    <span class="search-icon">↗</span>
+  </div>
+  <div class="designer-grid" id="designer-grid"></div>
+  <footer>
+    <span>2026 ⓒ Seoul National University of Science and Technology</span>
+    <span>Visual Communication Design</span>
+  </footer>
+</div>
+
+<!-- DESIGNER DETAIL -->
+<div id="designer-detail">
+  <div class="back-bar"><button class="back-btn" onclick="showPage('designer')">← Designer 목록으로</button></div>
+  <div class="detail-strip">
+    <div class="strip-avatar">
+      <div class="big-avatar" id="dd-av"></div>
+      <div class="det-name-kr" id="dd-kr"></div>
+      <div class="det-name-en" id="dd-en"></div>
+      <div class="det-track" id="dd-track"></div>
+    </div>
+    <div class="strip-contacts">
+      <div><div class="det-info-label">Instagram</div><div class="det-info-value" id="dd-insta"></div></div>
+      <div><div class="det-info-label">Work Category</div><div class="det-info-value" id="dd-cat"></div></div>
+    </div>
+    <div class="strip-about">
+      <div class="det-info-label" style="margin-bottom:14px">About</div>
+      <div class="det-intro" id="dd-intro"></div>
+    </div>
+  </div>
+  <div class="det-works-section">
+    <div class="det-works-label">Works</div>
+    <div class="det-works-grid" id="dd-works"></div>
+  </div>
+  <footer><span>2026 ⓒ Seoul National University of Science and Technology</span></footer>
+</div>
+
+<!-- WORK -->
+<div id="page-work" class="page">
+  <div class="page-header">
+    <h2 class="page-title">Work</h2>
+    <span class="page-sub">전체 작품</span>
+  </div>
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="filterWork(this,'all')">All</button>
+    <button class="filter-btn" onclick="filterWork(this,'BX(브랜드)')">BX 브랜드</button>
+    <button class="filter-btn" onclick="filterWork(this,'CX(서비스디자인)')">CX 서비스</button>
+    <button class="filter-btn" onclick="filterWork(this,'UX/UI')">UX/UI</button>
+    <button class="filter-btn" onclick="filterWork(this,'영상')">영상</button>
+    <button class="filter-btn" onclick="filterWork(this,'일러스트')">일러스트</button>
+    <button class="filter-btn" onclick="filterWork(this,'편집')">편집</button>
+  </div>
+  <div class="booth-section">
+    <div class="sec-label">부스 배치도</div>
+    <p class="booth-note">마우스를 올리면 부스 정보를 확인할 수 있습니다.</p>
+    <div class="booth-map" id="booth-map"></div>
+  </div>
+  <div class="work-grid" id="work-grid"></div>
+  <footer>
+    <span>2026 ⓒ Seoul National University of Science and Technology</span>
+    <span>Visual Communication Design</span>
+  </footer>
+</div>
+
+<!-- WORK DETAIL -->
+<div id="work-detail">
+  <div class="back-bar"><button class="back-btn" onclick="showPage('work')">← Work 목록으로</button></div>
+
+  <!-- 썸네일 + 작품 정보 (가로 배치) -->
+  <div class="wdv-header">
+    <div class="wdv-header-thumb">
+      <img id="wdv-thumb" src="" alt="">
+    </div>
+    <div class="wdv-header-info">
+      <h2 class="wd-title" id="wd-title"></h2>
+      <p class="wd-desc" id="wd-desc"></p>
+      <div class="wdv-meta">
+        <div><div class="wd-meta-label">Designer</div><div class="wd-meta-value" id="wd-by"></div></div>
+        <div><div class="wd-meta-label">Category</div><div class="wd-meta-value" id="wd-cat2"></div></div>
+        <div><div class="wd-meta-label">Year</div><div class="wd-meta-value">2026</div></div>
+        <button class="wd-dlink" id="wd-dlink">→ 디자이너 페이지 보기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 갤러리 이미지 전체너비 세로 스크롤 -->
+  <div class="wdv-gallery" id="wdv-gallery"></div>
+
+  <footer><span>2026 ⓒ Seoul National University of Science and Technology</span></footer>
+</div>
+
+<!-- MESSAGE -->
+<div id="page-message" class="page">
+  <div class="booth-page-header">
+    <h2 class="page-title">Message</h2>
+    <span class="page-sub">포토부스 — Photo Booth</span>
+  </div>
+
+  <div class="booth-wrap">
+    <!-- 왼쪽: 카메라 프리뷰 + 컨트롤 + 메시지 -->
+    <div class="booth-left">
+      <div class="booth-cam-box">
+        <video id="booth-video" autoplay playsinline muted style="display:none"></video>
+        <canvas id="booth-preview"></canvas>
+        <div class="booth-countdown" id="booth-countdown"></div>
+      </div>
+      <div class="booth-controls">
+        <button class="booth-start-btn" id="booth-start-btn" onclick="boothStart()">촬영 시작 — Start</button>
+        <p class="booth-hint" id="booth-hint">버튼을 누르면 3초 카운트다운 후 4컷을 촬영합니다</p>
+      </div>
+      <!-- 메시지 입력 -->
+      <div class="booth-msg-area">
+        <div class="booth-msg-top">
+          <div class="booth-msg-label">💬 메시지 — 사진에 말풍선으로 합성됩니다</div>
+        </div>
+        <!-- 라이브 말풍선 미리보기 -->
+        <div class="booth-bubble-live-wrap" id="booth-bubble-live-wrap" style="display:none">
+          <div class="booth-bubble-live" id="booth-bubble-live"></div>
+        </div>
+        <textarea id="booth-msg-input" class="booth-msg-input" rows="2" maxlength="60"
+          placeholder="남기고 싶은 말을 적어보세요 (최대 60자)"
+          oninput="boothUpdateBubble()"></textarea>
+        <div class="booth-msg-hint" id="booth-msg-hint-drag" style="display:none">오른쪽 사진에서 말풍선을 드래그해 위치를 조정하세요</div>
+      </div>
+    </div>
+
+    <!-- 오른쪽: QR버튼 + 스트립 -->
+    <div class="booth-right">
+      <button class="booth-qr-btn" id="booth-qr-btn" onclick="boothShowQR()" disabled>↗ QR로 받기 — Save</button>
+      <div class="booth-strip-wrap">
+        <div class="booth-strip" id="booth-strip">
+          <div class="booth-frame" id="booth-frame-0"><span class="booth-frame-num">1</span></div>
+          <div class="booth-frame" id="booth-frame-1"><span class="booth-frame-num">2</span></div>
+          <div class="booth-frame" id="booth-frame-2"><span class="booth-frame-num">3</span></div>
+          <div class="booth-frame" id="booth-frame-3"><span class="booth-frame-num">4</span></div>
+          <div class="booth-strip-footer">Captcha! — 2026 SNUT</div>
+        </div>
+        <!-- 말풍선 오버레이 -->
+        <div class="booth-bubble-overlay" id="booth-bubble-overlay" style="display:none">
+          <div class="booth-bubble" id="booth-bubble-text"></div>
+        </div>
+      </div>
+      <canvas id="booth-canvas" style="display:none"></canvas>
+    </div>
+  </div>
+
+  <!-- QR 모달 -->
+  <div class="booth-qr-modal" id="booth-qr-modal" onclick="boothCloseQR()">
+    <div class="booth-qr-box" onclick="event.stopPropagation()">
+      <div class="booth-qr-label">QR코드를 스캔해 사진을 저장하세요<br><span>약 10분 후 링크가 만료됩니다</span></div>
+      <img id="booth-qr-img" src="" alt="QR Code">
+      <a id="booth-qr-link" href="#" target="_blank" class="booth-qr-direct">→ 직접 링크 열기</a>
+      <button class="booth-qr-close" onclick="boothCloseQR()">닫기</button>
+    </div>
+  </div>
+
+  <footer>
+    <span>2026 ⓒ Seoul National University of Science and Technology</span>
+    <span>Visual Communication Design</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="main.js?v=4"></script>
+
+<!-- 3D 인터랙티브 히어로 (Three.js — 로컬 번들, CDN 의존 없음) -->
+<script src="models.js?v=1"></script>
+<script async src="vendor/es-module-shims.js"></script>
+<script type="importmap">
+{"imports":{"three":"./vendor/three/three.module.js","three/addons/":"./vendor/three/addons/"}}
+</script>
+<script type="module" src="hero3d.js?v=12"></script>
+</body>
+</html>
