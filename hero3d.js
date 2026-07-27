@@ -17,11 +17,10 @@ function initHero(canvas) {
 
   const scene = new THREE.Scene();
 
-  // ── 1점 투시 방 ──
-  // 기존에 1.8 등으로 줄였던 값을 다시 크게! (숫자가 클수록 널널해짐)
-const ROOM_W = 46, ROOM_H = 46, ROOM_D = 76, CELL = 5.5;
-  const CAM_Z = ROOM_D / 2 - 6;
-  const FOV = 50;
+  // ── 1점 투시 방 (클로즈업 느낌을 위해 깊이(ROOM_D)를 줄이고 널널하게 조절) ──
+  const ROOM_W = 42, ROOM_H = 42, ROOM_D = 55, CELL = 5.5;
+  const CAM_Z = ROOM_D / 2 - 4; // 카메라를 조금 더 앞으로 당겨서 클로즈업 효과
+  const FOV = 55; // 시야각을 넓혀서 공간감 극대화
   const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 300);
   camera.position.set(0, 0, CAM_Z);
   camera.lookAt(0, 0, -ROOM_D / 2);
@@ -40,8 +39,13 @@ const ROOM_W = 46, ROOM_H = 46, ROOM_D = 76, CELL = 5.5;
     for (let j = 0; j <= ch; j++) { const y = -h / 2 + h * j / ch; p.push(-w / 2, y, 0, w / 2, y, 0); }
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(p, 3));
-    // opacity를 1.0에서 0.45 정도로 낮추기
-return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: BLUE, transparent: true, opacity: 0.4 }));
+    
+    // ⭐️ 셰이더에서 구별하기 위한 빨간색 마커
+    return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ 
+      color: 0xFF0000, 
+      transparent: true, 
+      opacity: 1.0 
+    }));
   }
   const room = new THREE.Group(); scene.add(room);
   let m;
@@ -58,7 +62,6 @@ return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: BLUE, tran
   const b64ToBuf = b64 => { const s = atob(b64), n = s.length, a = new Uint8Array(n); for (let i = 0; i < n; i++) a[i] = s.charCodeAt(i); return a.buffer; };
 
   const DESIGN_ASPECT = 1440 / 754;
-  // mScale: 모바일에서 키우는 배율(계단 제외 1.2배), mnx/mny: 모바일 전용 위치(겹침 방지)
   const LAYOUT = [
     { key: 'steps',         nx: -0.651, ny:  0.138, hf: 0.350, d: 30, rx:  0.26, ry:  0.95, rz:  0.20, mScale: 1.0, mnx: -0.55, mny:  0.56 },
     { key: 'fire_hydrant',  nx: -0.296, ny: -0.186, hf: 0.454, d: 22, rx:  0.10, ry:  0.30, rz:  2.19, mScale: 1.2, mnx: -0.34, mny: -0.52 },
@@ -79,21 +82,19 @@ return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: BLUE, tran
     geos.forEach(g => { g.translate(-center.x, -center.y, -center.z); inner.add(new THREE.Mesh(g, material)); });
     inner.rotation.set(def.rx, def.ry, def.rz);
 
-    // pivot: 위치·부유·마우스틸트를 담당. inner: 고유 각도 유지 + 미세 흔들림
     const pivot = new THREE.Group();
     pivot.add(inner);
     scene.add(pivot);
 
-    const near = 1 - (def.d - 17) / 13;            // 0(먼)~1(가까움)
+    const near = 1 - (def.d - 17) / 13;
     const mouseAngle = Math.random() * Math.PI * 2;
-    const dirX = Math.cos(mouseAngle); // X축 반응 방향 (-1.0 ~ 1.0)
-    const dirY = Math.sin(mouseAngle); // Y축 반응 방향 (-1.0 ~ 1.0)
+    const dirX = Math.cos(mouseAngle);
+    const dirY = Math.sin(mouseAngle);
 
     pivot.userData = {
       def, inner, baseH: size.y || 1,
       fAmp: rnd(0.9, 1.7) * (def.d / 22), fSpeed: rnd(0.35, 0.7), fPhase: Math.random() * 6.28,
       dAmp: rnd(0.05, 0.11), dSpeed: rnd(0.2, 0.42), dPhase: Math.random() * 6.28,
-      // 마우스 반응 강도에 랜덤 방향(dirX, dirY)을 곱해서 개체마다 다양한 각도로 움직이게 적용
       mouseKY: (0.85 + 0.85 * near) * dirY, 
       mouseKX: (0.30 + 0.35 * near) * dirX,
       phase: Math.random() * 6.28,
@@ -103,24 +104,20 @@ return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: BLUE, tran
   }
 
   function designBox(d) {
-  const vh = Math.tan(THREE.MathUtils.degToRad(FOV) / 2) * d;
-  const vw = vh * camera.aspect;
-  
-  if (window.innerWidth < 768) {
-    // 기존: vw / DESIGN_ASPECT 때문에 가로 폭에 맞춰 스케일이 크게 작아짐
-    // 수정: 모바일의 좁고 긴 화면에 맞춰 세로 공간을 더 활용하도록 제한 완화
-    const MOBILE_ASPECT = 0.9; // 이 숫자가 작을수록 모바일에서 개체가 커짐 (0.8 ~ 1.2 사이 권장)
-    const H = Math.min(vh, vw / MOBILE_ASPECT);
-    return { H, W: H * MOBILE_ASPECT };
+    const vh = Math.tan(THREE.MathUtils.degToRad(FOV) / 2) * d;
+    const vw = vh * camera.aspect;
+    if (window.innerWidth < 768) {
+      const MOBILE_ASPECT = 0.9;
+      const H = Math.min(vh, vw / MOBILE_ASPECT);
+      return { H, W: H * MOBILE_ASPECT };
+    }
+    return { H: vh, W: Math.min(vh * DESIGN_ASPECT, vw) };
   }
-  
-  return { H: vh, W: Math.min(vh * DESIGN_ASPECT, vw) };
-}
+
   function layoutOne(pivot) {
     const u = pivot.userData, def = u.def, b = designBox(def.d);
     const mob = window.innerWidth < 768;
     const sc = mob ? (def.mScale || 1) : 1;
-    // 모바일에서 커진 만큼 서로 밀어내 겹침 완화 (중심에서 바깥으로 약간 이동)
     const spread = mob ? 1.12 : 1;
     pivot.position.set(def.nx * b.W * spread, def.ny * b.H * spread, camera.position.z - def.d);
     u.baseY = pivot.position.y;
@@ -140,16 +137,15 @@ return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: BLUE, tran
 
   // ── 디더(픽셀) 포스트 프로세싱 ──
   const rt = new THREE.WebGLRenderTarget(2, 2, { 
-  minFilter: THREE.LinearFilter, // 선을 약간 부드럽게 처리
-  magFilter: THREE.LinearFilter, 
-  depthBuffer: true, 
-  samples: 4 // 안티앨리어싱(MSAA) 추가로 겹치는 선 정돈
-});
+    minFilter: THREE.NearestFilter, 
+    magFilter: THREE.NearestFilter, 
+    depthBuffer: true 
+  });
   const postCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   const postScene = new THREE.Scene();
   const ditherMat = new THREE.ShaderMaterial({
     transparent: true,
-    uniforms: { tDiffuse: { value: rt.texture }, uRes: { value: new THREE.Vector2(2, 2) }, uScale: { value: 3.0 } },
+    uniforms: { tDiffuse: { value: rt.texture }, uRes: { value: new THREE.Vector2(2, 2) }, uScale: { value: 3.4 } },
     vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.0,1.0); }`,
     fragmentShader: `
       precision highp float;
@@ -168,7 +164,7 @@ return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: BLUE, tran
         vec3 rgb = c.rgb / max(c.a, 0.1);
         float lum = dot(rgb, vec3(0.299,0.587,0.114));
         float v = 1.0 - lum;
-        v = (v - 0.69) * 4.3 + 0.01;
+        v = (v - 0.65) * 4.5 + 0.01;
         float cov = clamp(v, 0.0, 1.0) * clamp(c.a + 0.25, 0.0, 1.0);
         if(c.a > 0.03) cov = max(cov, 0.001);
         return cov;
@@ -178,16 +174,34 @@ return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: BLUE, tran
         vec2 snappedUv = (block + 0.5) / uRes;
         
         vec4 c = texture2D(tDiffuse, snappedUv); 
-        float cov = coverage(c);
-        float th = bayer(block);
         
-        if(cov > th) gl_FragColor = vec4(0.322,0.329,1.0,1.0);
-        else discard;
+        if(c.a < 0.05) {
+            discard;
+        }
+        // 그리드 선 처리 (#A0A1FF 컬러 적용 및 예쁜 점선 패턴)
+        else if(c.r > c.b + 0.1) {
+            float th = bayer(block);
+            if(0.5 > th) {
+                gl_FragColor = vec4(0.627, 0.631, 1.0, 1.0); // #A0A1FF
+            } else {
+                discard;
+            }
+        } 
+        // 3D 개체 처리 (오리지널 깔끔한 렌더링 유지)
+        else {
+            float cov = coverage(c);
+            float th = bayer(block);
+            
+            if(cov > th) {
+                gl_FragColor = vec4(0.322, 0.329, 1.0, 1.0);
+            } else {
+                discard;
+            }
+        }
       }`
   });
   postScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), ditherMat));
 
-  // ── 마우스 ──
   const target = { x: 0, y: 0 }, cur = { x: 0, y: 0 };
   const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   window.addEventListener('pointermove', e => {
@@ -199,14 +213,14 @@ return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: BLUE, tran
   function resize() {
     const w = stage.clientWidth, h = Math.max(stage.clientHeight - 43, 1);
     PR = Math.min(window.devicePixelRatio, 1.5);
-    const scale = ditherMat.uniforms.uScale.value; // 기본값 3.0
+    const scale = ditherMat.uniforms.uScale.value;
     
     renderer.setPixelRatio(PR);
     renderer.setSize(w, h, false);
     
-    // ⭐️ 핵심: 렌더타겟 해상도를 3배(scale) 작게 설정해서 선을 도트 픽셀 크기에 꽉 차게 렌더링
-    const rw = Math.round((w * PR) / scale);
-    const rh = Math.round((h * PR) / scale);
+    // ⭐️ 우측 끝 선이 잘리지 않도록 Math.ceil을 사용해 해상도를 넉넉하게 보정
+    const rw = Math.ceil((w * PR) / scale);
+    const rh = Math.ceil((h * PR) / scale);
     rt.setSize(rw, rh);
     ditherMat.uniforms.uRes.value.set(rw, rh);
     
@@ -222,7 +236,6 @@ return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: BLUE, tran
     cur.y += (target.y - cur.y) * 0.06;
     const mx = reduce ? 0 : cur.x, my = reduce ? 0 : cur.y;
 
-    // 각 오브젝트가 개별로: 위아래 부유 + 각도 드리프트 + 마우스 방향 틸트
     objs.forEach(p => {
       const u = p.userData, inner = u.inner;
       p.position.y = u.baseY + Math.sin(t * u.fSpeed + u.fPhase) * u.fAmp;
@@ -231,14 +244,12 @@ return new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: BLUE, tran
       p.rotation.x += (tiltX - p.rotation.x) * 0.15;
       p.rotation.y += (tiltY - p.rotation.y) * 0.2;
       p.rotation.z = Math.sin(t * u.dSpeed * 0.6 + u.dPhase) * u.dAmp * 0.7;
-      // inner: 고유 각도 유지 + 아주 느린 각도 변화
-      // 360도 연속 회전 효과를 주고 싶을 때의 예시
-    inner.rotation.x = u.def.rx + Math.sin(t * 0.4 + u.phase) * 0.1;
-    inner.rotation.y = u.def.ry + Math.sin(t * 0.3 + u.phase * 1.3) * 0.4;
-    inner.rotation.z = u.def.rz + Math.cos(t * 0.35 + u.phase) * 0.05;
+      
+      inner.rotation.x = u.def.rx + Math.sin(t * 0.4 + u.phase) * 0.1;
+      inner.rotation.y = u.def.ry + Math.sin(t * 0.3 + u.phase * 1.3) * 0.4;
+      inner.rotation.z = u.def.rz + Math.cos(t * 0.35 + u.phase) * 0.05;
     });
 
-    // 1) 씬 → 렌더타겟, 2) 디더 셰이더로 화면에 출력
     renderer.setRenderTarget(rt);
     renderer.setClearColor(0x000000, 0); renderer.clear();
     renderer.render(scene, camera);
