@@ -456,3 +456,12 @@ nav{
   .mi-sponsors span{font-size:13px}
   .mi-copy{text-align:left}
 }
+/* ── 메타 정보 줄바꿈 설정 (PC 2줄 / 모바일 3~4줄) ── */
+.m-meta-item .mobile-br { display: none; }
+.m-meta-item .pc-inline { display: inline; }
+
+/* 모바일 화면(640px 이하) */
+@media (max-width: 640px) {
+  .m-meta-item .mobile-br { display: block; }
+  .m-meta-item .pc-inline { display: none; }
+}
