@@ -362,7 +362,7 @@ nav{
 /* ── 블루 섹션 (Frame 98 / 103) ── */
 .m-blue{
   background:#FFFFFF; /* 배경을 흰색으로 변경 */
-  padding:150px 40px;
+  padding:100px 0px;
   display:flex;flex-direction:column;align-items:center;gap:50px;
   border-top:2px solid var(--blue); /* 시작하는 구간 위쪽에만 파란색 라인 추가 */
 }
@@ -387,7 +387,7 @@ nav{
 /* ── 화이트 정보 섹션 (Frame 104) -> 파란 배경 & 하얀 글씨로 변경 ── */
 /* ── 콘셉트 텍스트 (Frame 39) : 흰 배경, 파란 글씨, 2열 ── */
 .m-concept{
-  background:#fff;padding:100px;
+  background:#fff;padding:0px 100px 100px;
   display:grid;grid-template-columns:1fr 1fr;gap:100px;
   align-items:start;
 }
