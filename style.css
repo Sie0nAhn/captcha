@@ -391,7 +391,7 @@ nav{
   display:grid;grid-template-columns:1fr 1fr;gap:100px;
   align-items:start;
 }
-.mc-col{display:flex;flex-direction:column;gap:36px}
+.mc-col{display:flex;flex-direction:column;gap:12px}
 .mc-body{font-family:var(--noto);font-weight:400;font-size:15px;line-height:1.6;color:var(--blue)}
 .mc-body.en{font-family:var(--sg)}
 .mc-note{font-family:var(--noto);font-weight:400;font-size:15px;line-height:1.6;color:var(--blue)}
